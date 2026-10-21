@@ -2,6 +2,7 @@ import AVFoundation
 import Foundation
 import Observation
 import PhotosUI
+import SwiftUI
 import UIKit
 
 enum TrackingStatus: Equatable {

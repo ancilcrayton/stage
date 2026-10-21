@@ -1,7 +1,9 @@
 import AVFoundation
+import CoreTransferable
 import Foundation
 import Observation
 import PhotosUI
+import SwiftUI
 import UniformTypeIdentifiers
 
 struct MediaItem: Identifiable, Codable, Equatable {

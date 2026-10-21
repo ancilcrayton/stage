@@ -71,7 +71,7 @@ struct LibraryView: View {
                 Task { await model.importFile(from: url) }
             }
         }
-        .onChange(of: photoItem) { _, item in
+        .onChange(of: photoItem) { item in
             guard let item else { return }
             Task { await model.importPhoto(item) }
             photoItem = nil
@@ -111,7 +111,7 @@ struct LibraryView: View {
         HStack(spacing: 8) {
             addButton("folder", "Files") { importingFile = true }
             PhotosPicker(selection: $photoItem, matching: .videos) {
-                addLabel("photo", "Photos")
+                AddLabel(symbol: "photo", title: "Photos")
             }
             .buttonStyle(.plain)
             addButton("link", "Link") { showLink = true }
@@ -170,11 +170,17 @@ struct LibraryView: View {
     }
 
     private func addButton(_ symbol: String, _ title: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) { addLabel(symbol, title) }
+        Button(action: action) { AddLabel(symbol: symbol, title: title) }
             .buttonStyle(.plain)
     }
+}
 
-    private func addLabel(_ symbol: String, _ title: String) -> some View {
+private struct AddLabel: View {
+    @Environment(StageModel.self) private var model
+    let symbol: String
+    let title: String
+
+    var body: some View {
         HStack(spacing: 6) {
             if model.library.isImporting {
                 ProgressView().controlSize(.small).tint(Theme.accent)
