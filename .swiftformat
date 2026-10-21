@@ -1,0 +1,7 @@
+--swiftversion 6.0
+--indent 4
+--wraparguments before-first
+--wrapcollections before-first
+--self remove
+--importgrouping testable-bottom
+--stripunusedargs closure-only

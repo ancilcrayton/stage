@@ -1,0 +1,35 @@
+name: iOS
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  ipa:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: |
+          shopt -s nullglob
+          candidates=(/Applications/Xcode_27*.app /Applications/Xcode_26.6.app /Applications/Xcode.app)
+          if [ ${#candidates[@]} -eq 0 ]; then
+            echo "No Xcode found on the runner" >&2
+            ls /Applications
+            exit 1
+          fi
+          sudo xcode-select -s "${candidates[0]}"
+          xcodebuild -version
+
+      - name: Build unsigned IPA
+        run: |
+          brew install xcodegen
+          SELECT_XCODE=0 bash scripts/build-ipa.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Stage-ipa
+          path: Stage.ipa
+          if-no-files-found: error

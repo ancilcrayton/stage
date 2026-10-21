@@ -1,0 +1,10 @@
+build/
+*.ipa
+tools/swiftlint
+DerivedData/
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+*.xcuserstate
+.DS_Store
+.swiftpm/
